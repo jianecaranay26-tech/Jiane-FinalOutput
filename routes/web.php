@@ -1,9 +1,9 @@
+
 <?php
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\TenantController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,9 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
+    // Room Management
     Route::resource('rooms', RoomController::class)
         ->only(['index', 'store', 'update', 'destroy']);
 
+    // Tenant Management
     Route::resource('tenants', TenantController::class)
         ->only(['index', 'store', 'update', 'destroy']);
 });

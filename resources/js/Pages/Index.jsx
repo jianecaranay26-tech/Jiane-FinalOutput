@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Index({ tenants = [] }) {
+export default function Index({ rooms = [] }) {
     const { data, setData, post, put, delete: destroy, processing, errors, reset } = useForm({
         room_number: '',
         capacity: 1,
@@ -15,7 +16,7 @@ export default function Index({ tenants = [] }) {
         e.preventDefault();
 
         if (editingRoom) {
-            put(/rooms/${editingRoom.id}, {
+            put(`/rooms/${editingRoom.id}`, {
                 onSuccess: () => {
                     reset();
                     setEditingRoom(null);
@@ -44,8 +45,8 @@ export default function Index({ tenants = [] }) {
     }
 
     function deleteRoom(room) {
-        if (window.confirm(Delete room ${room.room_number}?)) {
-            destroy(/rooms/${room.id});
+        if (window.confirm(`Delete room ${room.room_number}?`)) {
+            destroy(`/rooms/${room.id}`);
         }
     }
 
@@ -62,6 +63,9 @@ export default function Index({ tenants = [] }) {
                         </Link>
                         <Link href="/rooms" className="font-semibold underline">
                             Rooms
+                        </Link>
+                        <Link href="/tenants" className="hover:underline">
+                            Tenants
                         </Link>
                     </div>
                 </nav>
@@ -214,12 +218,14 @@ export default function Index({ tenants = [] }) {
                                             <td className="p-3">
                                                 <div className="flex gap-3">
                                                     <button
+                                                        type="button"
                                                         onClick={() => editRoom(room)}
                                                         className="font-medium text-blue-700 hover:underline"
                                                     >
                                                         Edit
                                                     </button>
                                                     <button
+                                                        type="button"
                                                         onClick={() => deleteRoom(room)}
                                                         className="font-medium text-red-600 hover:underline"
                                                     >
